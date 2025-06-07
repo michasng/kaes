@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c44nhl6hx0x7a" path="res://scenes/common/character.gd" id="1_5gtgg"]
 [ext_resource type="Script" uid="uid://bekl7pudxq13t" path="res://scenes/player/player_sprite.gd" id="2_qek5x"]
 [ext_resource type="Script" uid="uid://c3kw622vmdasi" path="res://scenes/common/state_machine/state_machine.gd" id="3_lvxji"]
-[ext_resource type="Texture2D" uid="uid://d2hj45dgy24mn" path="res://textures/characters/hats/forehead.png" id="4_5gtgg"]
+[ext_resource type="Texture2D" uid="uid://cffirdv1hcem7" path="res://textures/characters/hats/bat.png" id="4_h17s1"]
 [ext_resource type="Script" uid="uid://bod6g0tox0jln" path="res://scenes/common/character_movement/idle_movement_state.gd" id="4_p47bc"]
 [ext_resource type="Script" uid="uid://mbt8kxhtg5bx" path="res://scenes/common/character_movement/jump_movement_state.gd" id="5_0owmy"]
 [ext_resource type="Script" uid="uid://d4hml4ekg31ch" path="res://scenes/common/character_movement/walk_movement_state.gd" id="6_qek5x"]
@@ -92,15 +92,14 @@ script = ExtResource("1_5gtgg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tuyoq")
-animation = &"walk"
+animation = &"idle"
 script = ExtResource("2_qek5x")
 
 [node name="OnHead" type="Node2D" parent="AnimatedSprite2D"]
 
 [node name="HatSprite2D" type="Sprite2D" parent="AnimatedSprite2D/OnHead"]
 position = Vector2(0, -7)
-texture = ExtResource("4_5gtgg")
-offset = Vector2(0, 1)
+texture = ExtResource("4_h17s1")
 
 [node name="InHand" type="Node2D" parent="AnimatedSprite2D"]
 show_behind_parent = true
