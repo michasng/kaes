@@ -1,7 +1,9 @@
 class_name PlayerSprite extends AnimatedSprite2D
 
 var character: CharacterBody2D
-@onready var hat_sprite: Sprite2D = $HatSprite2D
+
+@onready var on_head: Node2D = $OnHead
+@onready var in_hand: Node2D = $InHand
 
 const _ANIMATION_BY_STATE_NAME: Dictionary = {
 	"IdleMovementState": "idle",
@@ -17,13 +19,16 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if character.velocity.x != 0:
-		flip_h = character.velocity.x < 0
-		hat_sprite.flip_h = flip_h
+		# inverting scale.x flips dependent sprites too (as opposed to setting flip_h)
+		scale = Vector2(sign(character.velocity.x), 1)
 
 func _on_movement_state_changed(_previous_state: State, current_state: State) -> void:
 	play(_ANIMATION_BY_STATE_NAME[current_state.name])
 
-func update_hat_position() -> void:
-	# some frames of some animations have a lower head, so the hat must follow
-	var hat_needs_offset = animation == "fall" or (animation == "walk" and frame % 2 == 0)
-	hat_sprite.offset = Vector2(0, 1 if hat_needs_offset else 0)
+# some frames of some animations have a lower head or hand, so the dependent sprites must follow
+func update_offsets() -> void:
+	var head_offset_needed = animation == "fall" or (animation == "walk" and frame % 2 == 0)
+	on_head.position = Vector2(0, 1 if head_offset_needed else 0)
+
+	var hand_offset_needed = animation == "fall" or animation == "jump" or (animation == "walk" and frame % 2 == 0)
+	in_hand.position = Vector2(0, 1 if hand_offset_needed else 0)

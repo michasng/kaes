@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://vqrg6yuwxvm4"]
+[gd_scene load_steps=20 format=3 uid="uid://vqrg6yuwxvm4"]
 
 [ext_resource type="Texture2D" uid="uid://b6f54iw5mdl8" path="res://textures/characters/player.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://c44nhl6hx0x7a" path="res://scenes/common/character.gd" id="1_5gtgg"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://mbt8kxhtg5bx" path="res://scenes/common/character_movement/jump_movement_state.gd" id="5_0owmy"]
 [ext_resource type="Script" uid="uid://d4hml4ekg31ch" path="res://scenes/common/character_movement/walk_movement_state.gd" id="6_qek5x"]
 [ext_resource type="Script" uid="uid://hsmootkffcg" path="res://scenes/common/character_movement/fall_movement_state.gd" id="7_5gtgg"]
+[ext_resource type="PackedScene" uid="uid://dncqe48opxhn2" path="res://scenes/items/sword.tscn" id="10_h17s1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qek5x"]
 atlas = ExtResource("1_3vyb7")
@@ -94,10 +95,18 @@ sprite_frames = SubResource("SpriteFrames_tuyoq")
 animation = &"walk"
 script = ExtResource("2_qek5x")
 
-[node name="HatSprite2D" type="Sprite2D" parent="AnimatedSprite2D"]
+[node name="OnHead" type="Node2D" parent="AnimatedSprite2D"]
+
+[node name="HatSprite2D" type="Sprite2D" parent="AnimatedSprite2D/OnHead"]
 position = Vector2(0, -7)
 texture = ExtResource("4_5gtgg")
 offset = Vector2(0, 1)
+
+[node name="InHand" type="Node2D" parent="AnimatedSprite2D"]
+show_behind_parent = true
+
+[node name="Sword" parent="AnimatedSprite2D/InHand" instance=ExtResource("10_h17s1")]
+position = Vector2(4, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_gmlin")
@@ -125,6 +134,6 @@ metadata/_custom_type_script = "uid://d4hml4ekg31ch"
 script = ExtResource("7_5gtgg")
 metadata/_custom_type_script = "uid://hsmootkffcg"
 
-[connection signal="animation_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="update_hat_position"]
-[connection signal="frame_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="update_hat_position"]
+[connection signal="animation_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="update_offsets"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="update_offsets"]
 [connection signal="state_changed" from="MovementStateMachine" to="AnimatedSprite2D" method="_on_movement_state_changed"]
