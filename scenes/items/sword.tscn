@@ -3,6 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://b8wqhl8cg0bu4" path="res://textures/items/sword.png" id="1_76q7b"]
 [ext_resource type="Script" uid="uid://cs0vskn1jkgbx" path="res://scenes/items/sword.gd" id="1_i5ed0"]
 
+[sub_resource type="Animation" id="Animation_l3uod"]
+length = 0.001
+
 [sub_resource type="Animation" id="Animation_i5ed0"]
 resource_name = "use"
 length = 0.2
@@ -18,9 +21,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0, -0.785398, 2.0944, 0.0]
 }
-
-[sub_resource type="Animation" id="Animation_l3uod"]
-length = 0.001
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l3uod"]
 _data = {

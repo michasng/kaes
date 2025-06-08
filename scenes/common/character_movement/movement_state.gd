@@ -18,9 +18,9 @@ func get_next_state() -> State:
 	return fall_state
 
 func get_next_floor_state() -> State:
-	if Input.is_action_pressed("jump"):
+	if character.brain.wants_to_jump():
 		return jump_state
-	if Input.is_action_pressed("left") or Input.is_action_pressed("right"):
+	if character.brain.wants_to_move_left() or character.brain.wants_to_move_right():
 		return walk_state
 	return idle_state
 	

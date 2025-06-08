@@ -1,43 +1,43 @@
-[gd_scene load_steps=21 format=3 uid="uid://vqrg6yuwxvm4"]
+[gd_scene load_steps=21 format=3 uid="uid://dcxpj0we4t20j"]
 
-[ext_resource type="Texture2D" uid="uid://b6f54iw5mdl8" path="res://textures/characters/player.png" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://c44nhl6hx0x7a" path="res://scenes/common/character.gd" id="1_5gtgg"]
-[ext_resource type="Script" uid="uid://bekl7pudxq13t" path="res://scenes/common/character_sprite.gd" id="2_qek5x"]
-[ext_resource type="Script" uid="uid://c3kw622vmdasi" path="res://scenes/common/state_machine/state_machine.gd" id="3_lvxji"]
-[ext_resource type="Texture2D" uid="uid://cffirdv1hcem7" path="res://textures/characters/hats/bat.png" id="4_h17s1"]
-[ext_resource type="Script" uid="uid://bod6g0tox0jln" path="res://scenes/common/character_movement/idle_movement_state.gd" id="4_p47bc"]
-[ext_resource type="Script" uid="uid://mbt8kxhtg5bx" path="res://scenes/common/character_movement/jump_movement_state.gd" id="5_0owmy"]
-[ext_resource type="Script" uid="uid://d4hml4ekg31ch" path="res://scenes/common/character_movement/walk_movement_state.gd" id="6_qek5x"]
-[ext_resource type="Script" uid="uid://hsmootkffcg" path="res://scenes/common/character_movement/fall_movement_state.gd" id="7_5gtgg"]
-[ext_resource type="PackedScene" uid="uid://dncqe48opxhn2" path="res://scenes/items/sword.tscn" id="10_h17s1"]
-[ext_resource type="Script" uid="uid://x8udy6u52y8r" path="res://scenes/player/player_brain.gd" id="11_je7p5"]
+[ext_resource type="Script" uid="uid://c44nhl6hx0x7a" path="res://scenes/common/character.gd" id="1_x5krk"]
+[ext_resource type="Script" uid="uid://dg33vajbkreo2" path="res://scenes/non_player_character/enemy_brain.gd" id="2_g4xnq"]
+[ext_resource type="Texture2D" uid="uid://b6f54iw5mdl8" path="res://textures/characters/player.png" id="2_vkgur"]
+[ext_resource type="Script" uid="uid://bekl7pudxq13t" path="res://scenes/common/character_sprite.gd" id="3_g4xnq"]
+[ext_resource type="PackedScene" uid="uid://dncqe48opxhn2" path="res://scenes/items/sword.tscn" id="5_phqxm"]
+[ext_resource type="Texture2D" uid="uid://y7i0e8iyn7sf" path="res://textures/characters/hats/knight.png" id="5_vkgur"]
+[ext_resource type="Script" uid="uid://c3kw622vmdasi" path="res://scenes/common/state_machine/state_machine.gd" id="6_uv0mj"]
+[ext_resource type="Script" uid="uid://bod6g0tox0jln" path="res://scenes/common/character_movement/idle_movement_state.gd" id="7_v5qig"]
+[ext_resource type="Script" uid="uid://mbt8kxhtg5bx" path="res://scenes/common/character_movement/jump_movement_state.gd" id="8_xm55i"]
+[ext_resource type="Script" uid="uid://d4hml4ekg31ch" path="res://scenes/common/character_movement/walk_movement_state.gd" id="9_ugong"]
+[ext_resource type="Script" uid="uid://hsmootkffcg" path="res://scenes/common/character_movement/fall_movement_state.gd" id="10_il7rb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qek5x"]
-atlas = ExtResource("1_3vyb7")
+atlas = ExtResource("2_vkgur")
 region = Rect2(80, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5gtgg"]
-atlas = ExtResource("1_3vyb7")
+atlas = ExtResource("2_vkgur")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h17s1"]
-atlas = ExtResource("1_3vyb7")
+atlas = ExtResource("2_vkgur")
 region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
-atlas = ExtResource("1_3vyb7")
+atlas = ExtResource("2_vkgur")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
-atlas = ExtResource("1_3vyb7")
+atlas = ExtResource("2_vkgur")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qlg0r"]
-atlas = ExtResource("1_3vyb7")
+atlas = ExtResource("2_vkgur")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
-atlas = ExtResource("1_3vyb7")
+atlas = ExtResource("2_vkgur")
 region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tuyoq"]
@@ -88,30 +88,31 @@ animations = [{
 radius = 4.0
 height = 16.0
 
-[node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_5gtgg")
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_x5krk")
 
-[node name="PlayerBrain" type="Node" parent="."]
-script = ExtResource("11_je7p5")
-metadata/_custom_type_script = "uid://x8udy6u52y8r"
+[node name="EnemyBrain" type="Node" parent="."]
+script = ExtResource("2_g4xnq")
+metadata/_custom_type_script = "uid://dg33vajbkreo2"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tuyoq")
 animation = &"idle"
-script = ExtResource("2_qek5x")
+script = ExtResource("3_g4xnq")
 
 [node name="OnHead" type="Node2D" parent="AnimatedSprite2D"]
 
 [node name="HatSprite2D" type="Sprite2D" parent="AnimatedSprite2D/OnHead"]
 position = Vector2(0, -7)
-texture = ExtResource("4_h17s1")
+scale = Vector2(0.998235, 1)
+texture = ExtResource("5_vkgur")
 
 [node name="InHand" type="Node2D" parent="AnimatedSprite2D"]
 show_behind_parent = true
 
-[node name="Sword" parent="AnimatedSprite2D/InHand" node_paths=PackedStringArray("brain") instance=ExtResource("10_h17s1")]
+[node name="Sword" parent="AnimatedSprite2D/InHand" node_paths=PackedStringArray("brain") instance=ExtResource("5_phqxm")]
 position = Vector2(4, 3)
-brain = NodePath("../../../PlayerBrain")
+brain = NodePath("../../../EnemyBrain")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_gmlin")
@@ -119,24 +120,24 @@ shape = SubResource("CapsuleShape2D_gmlin")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("3_lvxji")
+script = ExtResource("6_uv0mj")
 initial_state = NodePath("IdleMovementState")
 metadata/_custom_type_script = "uid://c3kw622vmdasi"
 
 [node name="IdleMovementState" type="Node" parent="MovementStateMachine"]
-script = ExtResource("4_p47bc")
+script = ExtResource("7_v5qig")
 metadata/_custom_type_script = "uid://bod6g0tox0jln"
 
 [node name="JumpMovementState" type="Node" parent="MovementStateMachine"]
-script = ExtResource("5_0owmy")
+script = ExtResource("8_xm55i")
 metadata/_custom_type_script = "uid://mbt8kxhtg5bx"
 
 [node name="WalkMovementState" type="Node" parent="MovementStateMachine"]
-script = ExtResource("6_qek5x")
+script = ExtResource("9_ugong")
 metadata/_custom_type_script = "uid://d4hml4ekg31ch"
 
 [node name="FallMovementState" type="Node" parent="MovementStateMachine"]
-script = ExtResource("7_5gtgg")
+script = ExtResource("10_il7rb")
 metadata/_custom_type_script = "uid://hsmootkffcg"
 
 [connection signal="animation_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="update_offsets"]

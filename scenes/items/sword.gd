@@ -1,7 +1,9 @@
 class_name Sword extends Node2D
 
+@export var brain: CharacterBrain
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _physics_process(_delta: float) -> void:
-	if Input.is_action_just_pressed("use"):
+	if brain.wants_to_use():
 		animation_player.play("use")

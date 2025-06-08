@@ -1,4 +1,4 @@
-class_name PlayerSprite extends AnimatedSprite2D
+class_name CharacterSprite extends AnimatedSprite2D
 
 var character: CharacterBody2D
 

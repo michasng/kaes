@@ -9,6 +9,8 @@ class_name Character extends CharacterBody2D
 @onready var gravity_pixels_per_second_squared: float = 2 * jump_height_pixels / pow(jump_duration_seconds, 2)
 @onready var jump_velocity_pixels_per_second: float = sqrt(2 * gravity_pixels_per_second_squared * jump_height_pixels)
 
+@onready var brain: CharacterBrain = self.find_children("*", "CharacterBrain")[0]
+
 func default_physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	apply_friction()
@@ -24,7 +26,8 @@ func apply_friction() -> void:
 	velocity.x = move_toward(velocity.x, 0, friction_pixels_per_second)
 
 func move_horizontally(delta: float) -> void:
-	var input_direction = Input.get_axis("left", "right")
+	var input_direction = brain.get_movement_axis()
+	brain.wants_to_move_left()
 	if input_direction:
 		velocity.x = move_toward(
 			velocity.x,
