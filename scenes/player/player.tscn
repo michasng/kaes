@@ -1,14 +1,16 @@
-[gd_scene load_steps=21 format=3 uid="uid://vqrg6yuwxvm4"]
+[gd_scene load_steps=22 format=3 uid="uid://vqrg6yuwxvm4"]
 
 [ext_resource type="Texture2D" uid="uid://b6f54iw5mdl8" path="res://textures/characters/player.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://c44nhl6hx0x7a" path="res://scenes/common/character.gd" id="1_5gtgg"]
 [ext_resource type="Script" uid="uid://bekl7pudxq13t" path="res://scenes/common/character_sprite.gd" id="2_qek5x"]
+[ext_resource type="Shape2D" uid="uid://dhgyn1v3klov7" path="res://scenes/player/player_shape.tres" id="3_fm80t"]
 [ext_resource type="Script" uid="uid://c3kw622vmdasi" path="res://scenes/common/state_machine/state_machine.gd" id="3_lvxji"]
-[ext_resource type="Texture2D" uid="uid://cffirdv1hcem7" path="res://textures/characters/hats/bat.png" id="4_h17s1"]
 [ext_resource type="Script" uid="uid://bod6g0tox0jln" path="res://scenes/common/character_movement/idle_movement_state.gd" id="4_p47bc"]
 [ext_resource type="Script" uid="uid://mbt8kxhtg5bx" path="res://scenes/common/character_movement/jump_movement_state.gd" id="5_0owmy"]
+[ext_resource type="Texture2D" uid="uid://bg34hww8ir3o0" path="res://textures/characters/hats/ruffy.png" id="5_gx1jg"]
 [ext_resource type="Script" uid="uid://d4hml4ekg31ch" path="res://scenes/common/character_movement/walk_movement_state.gd" id="6_qek5x"]
 [ext_resource type="Script" uid="uid://hsmootkffcg" path="res://scenes/common/character_movement/fall_movement_state.gd" id="7_5gtgg"]
+[ext_resource type="Script" uid="uid://ceovxhgx04a6s" path="res://scenes/hurt_box.gd" id="8_gx1jg"]
 [ext_resource type="PackedScene" uid="uid://dncqe48opxhn2" path="res://scenes/items/sword.tscn" id="10_h17s1"]
 [ext_resource type="Script" uid="uid://x8udy6u52y8r" path="res://scenes/player/player_brain.gd" id="11_je7p5"]
 
@@ -84,11 +86,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gmlin"]
-radius = 4.0
-height = 16.0
-
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_5gtgg")
 
 [node name="PlayerBrain" type="Node" parent="."]
@@ -104,7 +104,7 @@ script = ExtResource("2_qek5x")
 
 [node name="HatSprite2D" type="Sprite2D" parent="AnimatedSprite2D/OnHead"]
 position = Vector2(0, -7)
-texture = ExtResource("4_h17s1")
+texture = ExtResource("5_gx1jg")
 
 [node name="InHand" type="Node2D" parent="AnimatedSprite2D"]
 show_behind_parent = true
@@ -114,7 +114,15 @@ position = Vector2(4, 3)
 brain = NodePath("../../../PlayerBrain")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_gmlin")
+shape = ExtResource("3_fm80t")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("8_gx1jg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = ExtResource("3_fm80t")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -139,6 +147,9 @@ metadata/_custom_type_script = "uid://d4hml4ekg31ch"
 script = ExtResource("7_5gtgg")
 metadata/_custom_type_script = "uid://hsmootkffcg"
 
+[connection signal="flipped" from="." to="AnimatedSprite2D" method="_on_character_flipped"]
 [connection signal="animation_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="update_offsets"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="update_offsets"]
+[connection signal="area_entered" from="HurtBox" to="HurtBox" method="_on_area_entered"]
+[connection signal="area_exited" from="HurtBox" to="HurtBox" method="_on_area_exited"]
 [connection signal="state_changed" from="MovementStateMachine" to="AnimatedSprite2D" method="_on_movement_state_changed"]

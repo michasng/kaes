@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dcxpj0we4t20j"]
+[gd_scene load_steps=22 format=3 uid="uid://dcxpj0we4t20j"]
 
 [ext_resource type="Script" uid="uid://c44nhl6hx0x7a" path="res://scenes/common/character.gd" id="1_x5krk"]
 [ext_resource type="Script" uid="uid://dg33vajbkreo2" path="res://scenes/non_player_character/enemy_brain.gd" id="2_g4xnq"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dncqe48opxhn2" path="res://scenes/items/sword.tscn" id="5_phqxm"]
 [ext_resource type="Texture2D" uid="uid://y7i0e8iyn7sf" path="res://textures/characters/hats/knight.png" id="5_vkgur"]
 [ext_resource type="Script" uid="uid://c3kw622vmdasi" path="res://scenes/common/state_machine/state_machine.gd" id="6_uv0mj"]
+[ext_resource type="Shape2D" uid="uid://mldtmixn1b2r" path="res://scenes/non_player_character/enemy_shape.tres" id="7_ekjmg"]
+[ext_resource type="Script" uid="uid://ceovxhgx04a6s" path="res://scenes/hurt_box.gd" id="7_g4xnq"]
 [ext_resource type="Script" uid="uid://bod6g0tox0jln" path="res://scenes/common/character_movement/idle_movement_state.gd" id="7_v5qig"]
 [ext_resource type="Script" uid="uid://mbt8kxhtg5bx" path="res://scenes/common/character_movement/jump_movement_state.gd" id="8_xm55i"]
 [ext_resource type="Script" uid="uid://d4hml4ekg31ch" path="res://scenes/common/character_movement/walk_movement_state.gd" id="9_ugong"]
@@ -84,11 +86,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gmlin"]
-radius = 4.0
-height = 16.0
-
 [node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_x5krk")
 
 [node name="EnemyBrain" type="Node" parent="."]
@@ -115,9 +115,16 @@ position = Vector2(4, 3)
 brain = NodePath("../../../EnemyBrain")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_gmlin")
+shape = ExtResource("7_ekjmg")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("7_g4xnq")
+metadata/_custom_type_script = "uid://ceovxhgx04a6s"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = ExtResource("7_ekjmg")
 
 [node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("6_uv0mj")
@@ -140,6 +147,9 @@ metadata/_custom_type_script = "uid://d4hml4ekg31ch"
 script = ExtResource("10_il7rb")
 metadata/_custom_type_script = "uid://hsmootkffcg"
 
+[connection signal="flipped" from="." to="AnimatedSprite2D" method="_on_character_flipped"]
 [connection signal="animation_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="update_offsets"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="update_offsets"]
+[connection signal="area_entered" from="HurtBox" to="HurtBox" method="_on_area_entered"]
+[connection signal="area_exited" from="HurtBox" to="HurtBox" method="_on_area_exited"]
 [connection signal="state_changed" from="MovementStateMachine" to="AnimatedSprite2D" method="_on_movement_state_changed"]

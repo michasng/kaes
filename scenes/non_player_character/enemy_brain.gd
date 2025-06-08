@@ -7,4 +7,4 @@ func wants_to_jump() -> bool:
 	return false
 
 func wants_to_use() -> bool:
-	return false
+	return randf() > 0.99
