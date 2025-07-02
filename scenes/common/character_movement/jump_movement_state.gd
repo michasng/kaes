@@ -10,6 +10,10 @@ func get_next_state() -> State:
 	if character.is_on_floor():
 		return get_next_floor_state()
 	
+	if not character.brain.wants_to_jump():
+		character.velocity.y *= character.jump_cut_velocity_factor
+		return fall_state
+	
 	if character.velocity.y > 0:
 		return fall_state
 	return self

@@ -5,6 +5,7 @@ class_name Character extends CharacterBody2D
 @export var friction_deceleration_seconds: float = 0.1 # time from velocity_pixels_per_second back to 0
 @export var jump_height_pixels: float = Globals.TILE_SIZE_PIXELS * 4.2
 @export var jump_apex_time_seconds: float = 0.4
+@export var jump_cut_velocity_factor: float = 0.5
 @export var view_direction: Vector2i = Vector2i.RIGHT
 @export var knockback_velocity_pixels_per_second: float = Globals.TILE_SIZE_PIXELS * 100
 
