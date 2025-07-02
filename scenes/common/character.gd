@@ -1,14 +1,16 @@
 class_name Character extends CharacterBody2D
 
-@export var friction_pixels_per_second: float = Globals.TILE_SIZE_PIXELS * 2
-@export var acceleration_pixels_per_second_squared: float = pow(Globals.TILE_SIZE_PIXELS * 10, 2)
-@export var velocity_pixels_per_second: float = Globals.TILE_SIZE_PIXELS * 8
-@export var jump_height_pixels: float = Globals.TILE_SIZE_PIXELS * 2.2
-@export var jump_duration_seconds: float = 0.34
+@export var acceleration_seconds: float = 0.1 # time to reach velocity_pixels_per_second
+@export var velocity_pixels_per_second: float = Globals.TILE_SIZE_PIXELS * 10
+@export var friction_deceleration_seconds: float = 0.1 # time from velocity_pixels_per_second back to 0
+@export var jump_height_pixels: float = Globals.TILE_SIZE_PIXELS * 4.2
+@export var jump_apex_time_seconds: float = 0.4
 @export var view_direction: Vector2i = Vector2i.RIGHT
 @export var knockback_velocity_pixels_per_second: float = Globals.TILE_SIZE_PIXELS * 100
 
-@onready var gravity_pixels_per_second_squared: float = 2 * jump_height_pixels / pow(jump_duration_seconds, 2)
+@onready var friction_pixels_per_second_squared: float = velocity_pixels_per_second / friction_deceleration_seconds
+@onready var acceleration_pixels_per_second_squared: float = (velocity_pixels_per_second / acceleration_seconds) + friction_pixels_per_second_squared
+@onready var gravity_pixels_per_second_squared: float = 2 * jump_height_pixels / pow(jump_apex_time_seconds, 2)
 @onready var jump_velocity_pixels_per_second: float = sqrt(2 * gravity_pixels_per_second_squared * jump_height_pixels)
 
 @onready var brain: CharacterBrain = self.find_children("*", "CharacterBrain")[0]
@@ -27,7 +29,7 @@ func _physics_process(_delta: float) -> void:
 
 func default_physics_process(delta: float) -> void:
 	apply_gravity(delta)
-	apply_friction()
+	apply_friction(delta)
 	move_horizontally(delta)
 	clamp_velocity()
 	move_and_slide()
@@ -38,8 +40,8 @@ func apply_gravity(delta: float) -> void:
 		velocity.y += gravity_pixels_per_second_squared * delta
 
 
-func apply_friction() -> void:
-	velocity.x = move_toward(velocity.x, 0, friction_pixels_per_second)
+func apply_friction(delta: float) -> void:
+	velocity.x = move_toward(velocity.x, 0, friction_pixels_per_second_squared * delta)
 
 
 func move_horizontally(delta: float) -> void:
