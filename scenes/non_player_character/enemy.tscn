@@ -96,6 +96,7 @@ script = ExtResource("2_g4xnq")
 metadata/_custom_type_script = "uid://dg33vajbkreo2"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -0.5)
 sprite_frames = SubResource("SpriteFrames_tuyoq")
 animation = &"idle"
 script = ExtResource("3_g4xnq")
