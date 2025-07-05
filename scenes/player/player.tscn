@@ -126,6 +126,7 @@ script = ExtResource("8_gx1jg")
 shape = ExtResource("3_fm80t")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
 
 [node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_lvxji")
